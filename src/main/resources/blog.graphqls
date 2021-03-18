@@ -10,3 +10,8 @@ type Post {
 type Query {
     recentPosts(count: Int = 100, offset: Int = 0): [Post]!
 }
+
+# The Root Mutation for the application
+type Mutation {
+    writePost(id: String!, title: String!, text: String!, category: String) : Post!
+}

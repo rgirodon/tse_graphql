@@ -26,4 +26,9 @@ public class GraphqlConfiguration {
     public Query query(PostDao postDao) {
         return new Query(postDao);
     }
+	
+	@Bean
+    public Mutation mutation(PostDao postDao) {
+        return new Mutation(postDao);
+    }
 }

@@ -12,6 +12,14 @@ public class PostDao {
     }
 
     public List<Post> getRecentPosts(int count, int offset) {
-    	return posts.stream().skip(offset).limit(count).collect(Collectors.toList());
+    	
+    	return this.posts.stream().skip(offset).limit(count).collect(Collectors.toList());
     }
+
+	public Post savePost(Post post) {
+		
+		this.posts.add(post);
+		
+		return post;
+	}
 }
