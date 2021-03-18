@@ -8,5 +8,5 @@ type Post {
 
 # The Root Query for the application
 type Query {
-    recentPosts(count: Int, offset: Int): [Post]!
+    recentPosts(count: Int = 100, offset: Int = 0): [Post]!
 }
