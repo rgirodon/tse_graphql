@@ -30,4 +30,16 @@ class FirstGraphqlApplicationTests {
                 
         assertEquals("Title 2", response.getList("$.data.recentPosts[?(@.id == 2)].title", String.class).get(0));
 	}
+	
+	@Test
+	public void testAllTeams() throws Exception {
+		
+		GraphQLResponse response = graphQLTestTemplate.postForResource("get-all-teams.graphql");
+        
+		assertTrue(response.isOk());
+        
+        assertEquals("2", response.get("$.data.allTeams.length()"));
+                
+        assertEquals("Spain", response.getList("$.data.allTeams[?(@.id =='SP')].name", String.class).get(0));
+	}
 }

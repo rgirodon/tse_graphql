@@ -17,18 +17,44 @@ public class GraphqlConfiguration {
             post.setId("" + postId);
             post.setTitle("Title " + postId);
             post.setText("Text " + postId);
+            post.setCategory("Category " + (postId % 2 == 0 ? "1" : "2"));
             posts.add(post);
         }
         return new PostDao(posts);
     }
 	
 	@Bean
-    public Query query(PostDao postDao) {
-        return new Query(postDao);
+	public TeamDao teamDao() {
+		
+		List<Team> teams = new ArrayList<>();
+		
+		Team team1 = new Team();
+		team1.setId("FRA");
+		team1.setName("France");
+		team1.setColors("Bleu, blanc, rouge");
+		teams.add(team1);
+		
+		Team team2 = new Team();
+		team2.setId("SP");
+		team2.setName("Spain");
+		team2.setColors("Rouge, jaune");
+		teams.add(team2);
+		
+		return new TeamDao(teams);
+	}
+	
+	@Bean
+    public BlogQuery blogQuery(PostDao postDao) {
+        return new BlogQuery(postDao);
     }
 	
 	@Bean
-    public Mutation mutation(PostDao postDao) {
-        return new Mutation(postDao);
+    public TeamsQuery teamsQuery(TeamDao teamDao) {
+        return new TeamsQuery(teamDao);
+    }
+	
+	@Bean
+    public BlogMutation mutation(PostDao postDao) {
+        return new BlogMutation(postDao);
     }
 }

@@ -5,11 +5,11 @@ import java.util.List;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 
 
-public class Query implements GraphQLQueryResolver {
+public class BlogQuery implements GraphQLQueryResolver {
 
 	private PostDao postDao;
 
-    public Query(PostDao postDao) {
+    public BlogQuery(PostDao postDao) {
         this.postDao = postDao;
     }
 

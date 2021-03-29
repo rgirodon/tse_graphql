@@ -2,11 +2,11 @@ package org.rygn.first_graphql;
 
 import graphql.kickstart.tools.GraphQLMutationResolver;
 
-public class Mutation implements GraphQLMutationResolver {
+public class BlogMutation implements GraphQLMutationResolver {
 	
 	private PostDao postDao;
 
-    public Mutation(PostDao postDao) {
+    public BlogMutation(PostDao postDao) {
         this.postDao = postDao;
     }
 
