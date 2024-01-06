@@ -1,45 +1,41 @@
 package org.rygn.first_graphql;
 
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import com.graphql.spring.boot.test.GraphQLResponse;
-import com.graphql.spring.boot.test.GraphQLTestTemplate;
+import org.springframework.boot.test.autoconfigure.graphql.GraphQlTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.graphql.test.tester.GraphQlTester;
 
 
-// @GraphQLTest
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@GraphQlTest(BlogController.class)
+@Import(GraphqlConfiguration.class)
 class FirstGraphqlApplicationTests {
 
 	@Autowired
-    private GraphQLTestTemplate graphQLTestTemplate;
+    private GraphQlTester graphQlTester;
 
 	
 	@Test
-	public void testRecentPosts() throws Exception {
+	public void testRecentPosts() throws IOException {
 		
-		GraphQLResponse response = graphQLTestTemplate.postForResource("get-recent-posts.graphql");
-        
-		assertTrue(response.isOk());
-        
-        assertEquals("10", response.get("$.data.recentPosts.length()"));
-                
-        assertEquals("Title 2", response.getList("$.data.recentPosts[?(@.id == 2)].title", String.class).get(0));
+        String documentName = "recent_posts";
+
+        graphQlTester.documentName(documentName)
+          .variable("count", 1)
+          .variable("offset", 0)
+          .execute()
+          .path("$")
+          .matchesJson(expected(documentName));
 	}
 	
-	@Test
-	public void testAllTeams() throws Exception {
-		
-		GraphQLResponse response = graphQLTestTemplate.postForResource("get-all-teams.graphql");
-        
-		assertTrue(response.isOk());
-        
-        assertEquals("2", response.get("$.data.allTeams.length()"));
-                
-        assertEquals("Spain", response.getList("$.data.allTeams[?(@.id =='SP')].name", String.class).get(0));
-	}
+    public static String expected(String fileName) throws IOException {
+        Path path = Paths.get("src/test/resources/" + fileName + "_expected_response.json");
+        return new String(Files.readAllBytes(path));
+    }
 }

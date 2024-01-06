@@ -1,11 +1,11 @@
 # The Root Query for the application
 type Query {
+
     recentPosts(count: Int = 100, offset: Int = 0): [Post]!
-    
-    allTeams: [Team]!
 }
 
 # The Root Mutation for the application
 type Mutation {
+
     writePost(id: String!, title: String!, text: String!, category: String) : Post!
 }
