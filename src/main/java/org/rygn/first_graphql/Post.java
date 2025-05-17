@@ -6,7 +6,8 @@ public class Post {
     private String title;
     private String category;
     private String text;
-    
+    private String authorId;    
+	
 	public String getId() {
 		return id;
 	}
@@ -32,5 +33,11 @@ public class Post {
 	}
 	public void setText(String text) {
 		this.text = text;
+	}
+	public String getAuthorId() {
+		return authorId;
+	}
+	public void setAuthorId(String authorId) {
+		this.authorId = authorId;
 	}
 }

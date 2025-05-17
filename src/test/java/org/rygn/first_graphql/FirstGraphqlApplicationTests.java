@@ -35,7 +35,7 @@ class FirstGraphqlApplicationTests {
 	}
 	
     public static String expected(String fileName) throws IOException {
-        Path path = Paths.get("src/test/resources/" + fileName + "_expected_response.json");
+        Path path = Paths.get("src/test/resources/graphql-test/" + fileName + "_expected_response.json");
         return new String(Files.readAllBytes(path));
     }
 }
